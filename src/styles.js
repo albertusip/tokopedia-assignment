@@ -65,7 +65,7 @@ export const Main = withTheme(styled.div`
 
 export const Header = withTheme(styled.div`
     align-items: center;
-    background: ${props => props.theme.colorBgPrimary};
+    background: ${props => props.theme.colorBgCardPrimary};
     display: flex;
     height: 50px;
     margin: 0px -15px;

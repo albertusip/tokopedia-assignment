@@ -3,9 +3,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { ThemeProvider } from '@emotion/react'
 import { ButtonOutline, Card, Col, fluid, Footer, Header, Main, Row, Wrapper, max100vh } from './styles.js';
 import { light, dark, global } from './color.js';
-import PokemonDetail from './components/PokemonDetail/index';
-import PokemonList from './components/PokemonList/index';
-import MyPokemon from './components/MyPokemon/index';
+import loadable from '@loadable/component';
 import ListContext from './contexts/MyPokemonsContext';
 import PokeballIcon from 'mdi-react/PokeballIcon';
 import FormatListBulletedIcon from 'mdi-react/FormatListBulletedIcon';
@@ -16,6 +14,10 @@ import {
 	NavLink
 } from 'react-router-dom';
 import './App.css';
+
+const PokemonDetail = loadable(() => import('./components/PokemonDetail/index'));
+const PokemonList = loadable(() => import('./components/PokemonList/index'));
+const MyPokemon = loadable(() => import('./components/MyPokemon/index'));
 
 const client = new ApolloClient({
 	uri: "https://graphql-pokeapi.vercel.app/api/graphql",
@@ -46,14 +48,14 @@ const App = () => {
 			<ListContext.Provider value={{ myPokemons, setMyPokemons, darkMode }}>
 				<ThemeProvider theme={darkMode ? { ...global, ...dark } : { ...global, ...light }}>
 					<Main>
-						<Wrapper className={max100vh} minWidth="370">
+						<Wrapper className={max100vh} minWidth="360">
 							<Header>
 								<div className="header-title">
 									Pokemon App | {
 										<>
 											<Route exact path="/">
 												<span className="path">
-													List Pokemon in the World
+													List All Pokemon
 												</span>
 											</Route>
 											<Route exact path="/my-pokemon">

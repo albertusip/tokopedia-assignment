@@ -3,8 +3,10 @@ import { Row, Wrapper } from '../../styles';
 import { rowPokeList, wrapperPokeList } from './styles';
 import { useTheme } from '@emotion/react';
 import ThoughtBubbleOutlineIcon from 'mdi-react/ThoughtBubbleOutlineIcon';
-import PokemonCard from './components/PokemonCard';
+import loadable from '@loadable/component';
 import ListContext from '../../contexts/MyPokemonsContext';
+
+const PokemonCard = loadable(() => import('./components/PokemonCard'));
 
 const MyPokemon = () => {
     const { myPokemons } = useContext(ListContext);

@@ -8,7 +8,9 @@ import { colorDanger, colorPrimary } from '../../color';
 import { useTheme } from '@emotion/react';
 import ListContext from '../../contexts/MyPokemonsContext';
 import Swal from 'sweetalert2';
-import Loading from '../Loading/index';
+import loadable from '@loadable/component';
+
+const Loading = loadable(() => import('../Loading/index'));
 
 const POKEMON = gql`
 	query pokemon($name: String!) {

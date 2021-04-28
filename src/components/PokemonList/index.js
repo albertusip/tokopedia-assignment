@@ -5,10 +5,12 @@ import { Button, Card, Col, Row, Wrapper } from '../../styles';
 import { capitalize } from '../../helper/index';
 import { NavLink } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
+import loadable from '@loadable/component';
 import ListContext from '../../contexts/MyPokemonsContext';
-import Loading from '../Loading/index';
 import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
+
+const Loading = loadable(() => import('../Loading/index'));
 
 const POKEMON_LIST = gql`
 	query pokemons($limit: Int, $offset: Int) {
@@ -74,7 +76,7 @@ const PokemonList = () => {
 										<Wrapper>
 											<Row>
 												<Col sm="6" md="6" className={wrapperCardImage}>
-													<img src={item.image} alt={item.__typename}></img>
+													<img src={item.image} alt={item.__typename} width="100px" height="100px"></img>
 												</Col>
 												<Col sm="6" md="6" className={wrapperCardValue(theme)}>
 													<div className="title">{capitalize(item.name)}</div>
@@ -104,11 +106,7 @@ const PokemonList = () => {
 					Page: {page.current} / {page.total}
 				</div>
 				<Button
-					// I am confused here whether I should use disable when page same with total page or disable when data.pokemons.next === null.
-					// Because if I use disable button when data.pokemons.next === null, there won't be many requests if the user clicks one by one
-					// because user have to wait for the previous request to finish but it takes a long time if the user wants to go to a certain page immediately.
-					// If using disable button when page same with total page, The user can load the specified page faster, but this generates a large list of requests for the page skipped.
-					disabled={page.current === page.total} // data?.pokemons?.next === null
+					disabled={data?.pokemons?.next === null}
 					className={btnPaginate}
 					onClick={() => paginationClick(offset + LIMIT)}
 				>
